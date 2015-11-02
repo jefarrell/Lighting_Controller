@@ -1,0 +1,32 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.js"></script>
+
+
+<div id="container">
+	<ul id="buttonList"> 
+		<!-- {% for question in question_list %} -->
+			<li>
+				<input type="button" id="{{question.id}}" value= "{{question.question_text }}" />
+			</li>
+		<!-- {% endfor %} -->
+	</ul>
+</div>
+
+
+<script>
+	var lis = $('#container ul').children().length;
+	for (var i=0; i <= lis; i++ ) {
+		$('#'+i).click(function(){
+			questID = $(this).attr('id');
+			console.log("id clicked: " + questID);
+			$.get(questID+'/sendVals')
+		});
+	}
+</script>
+
+
+
+
+
