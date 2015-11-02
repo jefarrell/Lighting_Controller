@@ -3,21 +3,15 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views import generic
 
-from .models import Question#,Choice
+from .models import Question
 import OSC, time ####
 
-# View showing all possible choices, uses generic list view
+# View showing all choices, uses generic list view
 class IndexView(generic.ListView):
 	template_name = 'polls/index.html'
-	# context_object_name = 'latest_question_list'
 
 	def get_queryset(self):
 		return Question.objects.order_by('-pub_date')
-
-# View showing individual command page, uses generic detail view
-class DetailView(generic.DetailView):
-	model = Question
-	template_name = 'polls/detail.html'
 
 
 # function to send question ID to Processing via OSC
