@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views import generic
 
-from .models import Question,Choice
+from .models import Question#,Choice
 import OSC, time ####
 
 # View showing all possible choices, uses generic list view
