@@ -11,7 +11,8 @@ body {
 	background-color: #BFBFBF;
 }
 
-input[type="button"] {
+/*input[type="button"] {*/
+.rooms{
 	border: 3px solid #FFFFFF;
 	border-radius:1px;
 	background-color:#BFBFBF;

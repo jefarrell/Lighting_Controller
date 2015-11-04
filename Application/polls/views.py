@@ -22,6 +22,7 @@ def sendVals(request,question_id):
 	c.connect(send_address) 
 	msg = OSC.OSCMessage()
 	msgint = int(question_id)
+	
 	msg.setAddress("/print")
 	# appending ID as first item in message - important for Processing sketch
 	msg.append(msgint) 
@@ -34,6 +35,8 @@ def sendVals(request,question_id):
 		# 6: First 
 		# 7: Fifth 
 		# 8: ** North 
+		# 9: ** ON, Half
+		# 10: ** ON, Dim
 	roomDict = {
 		6:[i for i in range(40)],
 		5:[i for i in range(40,80)],

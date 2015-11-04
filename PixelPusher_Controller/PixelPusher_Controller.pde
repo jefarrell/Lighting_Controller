@@ -78,7 +78,10 @@ void oscEvent(OscMessage theOscMessage) {
         break;
       case 3:  // (" //////~~~~~~///////    ALL ON      //////~~~~~~///////");
         for (int i=0; i < strip.getLength(); i++) {
+          DeviceRegistry.setOverallBrightnessScale(1);
           strip.setPixel(c1, i);
+          delay(5);
+          DeviceRegistry.setOverallBrightnessScale(1);
         }
         break;
       case 4:  // (" //////~~~~~~///////    ALL OFF      //////~~~~~~///////");
@@ -114,23 +117,40 @@ void oscEvent(OscMessage theOscMessage) {
           println("OSC MESSAGE :: " + theOscMessage.get(i).intValue());
         }
         break;
+      case 9: 
+        (" //////~~~~~~///////    Half Intense      //////~~~~~~///////");
+        for (int i=0; i < strip.getLength(); i++) {
+          DeviceRegistry.setOverallBrightnessScale(0.5);
+          strip.setPixel(c1, i);
+          delay(5);
+          DeviceRegistry.setOverallBrightnessScale(1);
+        }
+        break;
+      case 0: 
+        (" //////~~~~~~///////    Dim Intense      //////~~~~~~///////");
+        for (int i=0; i < strip.getLength(); i++) {
+          DeviceRegistry.setOverallBrightnessScale(0.09);
+          strip.setPixel(c1, i);
+          delay(5);
+          DeviceRegistry.setOverallBrightnessScale(1);
+        }
+        break;
       }
     }
   }
-}
 
-private void prepareExitHandler () {
-  Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-    public void run () {
-      System.out.println("Shutdown hook running");
-      List<Strip> strips = registry.getStrips();
-      for (Strip strip : strips) {
-        for (int i=0; i<strip.getLength(); i++)
-        strip.setPixel(#000000, i);
+  private void prepareExitHandler () {
+    Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+      public void run () {
+        System.out.println("Shutdown hook running");
+        List<Strip> strips = registry.getStrips();
+        for (Strip strip : strips) {
+          for (int i=0; i<strip.getLength(); i++)
+          strip.setPixel(#000000, i);
+        }
+        for (int i=0; i<100000; i++)
+        Thread.yield();
       }
-      for (int i=0; i<100000; i++)
-      Thread.yield();
     }
+    ));
   }
-  ));
-}

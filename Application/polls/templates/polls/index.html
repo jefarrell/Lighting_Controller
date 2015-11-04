@@ -8,8 +8,12 @@
 	<ul id="buttonList"> 
 		{% for question in question_list %}
 			<li>
-				<input type="button" id="{{question.id}}" value= "{{question.question_text }}" />
+				<input type="button" id="{{question.id}}" class="rooms" value= "{{question.question_text }}" />
 			</li>
+<!-- 			{% if "Intensity" in question.question_text %}
+				
+				<script>console.log("filter works") </script>
+			{% endif %} -->
 		{% endfor %}
 	</ul>
 </div>
