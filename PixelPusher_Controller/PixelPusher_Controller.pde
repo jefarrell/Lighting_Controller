@@ -33,7 +33,7 @@ void setup() {
   testObserver = new TestObserver();
   registry.addObserver(testObserver);
   // 0.1 - 2.0
-  DeviceRegistry.setOverallBrightnessScale(1);
+  //DeviceRegistry.setOverallBrightnessScale(1);
   prepareExitHandler();
 }
 
@@ -57,6 +57,7 @@ void oscEvent(OscMessage theOscMessage) {
 
     for (Strip strip : strips) {
       //// Reset all lights to off, maybe not necessary later? ////
+      DeviceRegistry.setOverallBrightnessScale(1);
       for (int i=0; i < strip.getLength(); i++) {
         strip.setPixel(#000000, i);
       }
@@ -78,10 +79,8 @@ void oscEvent(OscMessage theOscMessage) {
         break;
       case 3:  // (" //////~~~~~~///////    ALL ON      //////~~~~~~///////");
         for (int i=0; i < strip.getLength(); i++) {
-          DeviceRegistry.setOverallBrightnessScale(1);
           strip.setPixel(c1, i);
           delay(5);
-          DeviceRegistry.setOverallBrightnessScale(1);
         }
         break;
       case 4:  // (" //////~~~~~~///////    ALL OFF      //////~~~~~~///////");
@@ -118,39 +117,38 @@ void oscEvent(OscMessage theOscMessage) {
         }
         break;
       case 9: 
-        (" //////~~~~~~///////    Half Intense      //////~~~~~~///////");
+        //(" //////~~~~~~///////    Half Intense      //////~~~~~~///////");
         for (int i=0; i < strip.getLength(); i++) {
           DeviceRegistry.setOverallBrightnessScale(0.5);
           strip.setPixel(c1, i);
           delay(5);
-          DeviceRegistry.setOverallBrightnessScale(1);
         }
         break;
-      case 0: 
-        (" //////~~~~~~///////    Dim Intense      //////~~~~~~///////");
+      case 10: 
+        // (" //////~~~~~~///////    Dim Intense      //////~~~~~~///////");
         for (int i=0; i < strip.getLength(); i++) {
           DeviceRegistry.setOverallBrightnessScale(0.09);
           strip.setPixel(c1, i);
           delay(5);
-          DeviceRegistry.setOverallBrightnessScale(1);
         }
         break;
       }
     }
   }
+}
 
-  private void prepareExitHandler () {
-    Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-      public void run () {
-        System.out.println("Shutdown hook running");
-        List<Strip> strips = registry.getStrips();
-        for (Strip strip : strips) {
-          for (int i=0; i<strip.getLength(); i++)
-          strip.setPixel(#000000, i);
-        }
-        for (int i=0; i<100000; i++)
-        Thread.yield();
+private void prepareExitHandler () {
+  Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+    public void run () {
+      System.out.println("Shutdown hook running");
+      List<Strip> strips = registry.getStrips();
+      for (Strip strip : strips) {
+        for (int i=0; i<strip.getLength(); i++)
+        strip.setPixel(#000000, i);
       }
+      for (int i=0; i<100000; i++)
+      Thread.yield();
     }
-    ));
   }
+  ));
+}

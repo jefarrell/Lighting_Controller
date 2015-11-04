@@ -13,8 +13,6 @@ $(document).ready(function(){
 			questID = $(this).attr('id');
 			console.log("id clicked: " + questID);
 			$.get(questID+'/sendVals')
-		});
-		
+		});	
 	}
-
 });
