@@ -22,11 +22,10 @@ def sendVals(request,question_id):
 	c.connect(send_address) 
 	msg = OSC.OSCMessage()
 	msgint = int(question_id)
-	
 	msg.setAddress("/print")
 	# appending ID as first item in message - important for Processing sketch
 	msg.append(msgint) 
-	# question_id mapping for now
+		### question_id mapping for now
 		# 1: Fourth
 		# 2: Third 
 		# 3: ** ON

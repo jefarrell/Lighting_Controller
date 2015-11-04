@@ -7,7 +7,6 @@ import java.util.*;
 
 OscP5 oscP5;  // send messages 
 NetAddress myRemoteLocation;  // where we send to
-private Random random = new Random();
 DeviceRegistry registry;
 
 
@@ -28,14 +27,12 @@ void setup() {
   size(640, 640, P3D);
   oscP5 = new OscP5(this, 5001);
   myRemoteLocation = new NetAddress("127.0.0.1", 5001);
-
   registry = new DeviceRegistry();
   testObserver = new TestObserver();
   registry.addObserver(testObserver);
-  // 0.1 - 2.0
-  //DeviceRegistry.setOverallBrightnessScale(1);
   prepareExitHandler();
 }
+
 
 void draw() {
 }
@@ -44,91 +41,102 @@ void draw() {
 void oscEvent(OscMessage theOscMessage) {
   // Get first value == this is the ID from python
   int incomingVal = theOscMessage.get(0).intValue();
-  color c1 = #ffffff;
   println("/////////////////");
   println("/////////////////");
   println(" OSC MESSAGE :: " + incomingVal);
   println("/////////////////");
   println("/////////////////");
 
+
   if (testObserver.hasStrips) {
     registry.startPushing();
     List<Strip> strips = registry.getStrips();
 
     for (Strip strip : strips) {
-      //// Reset all lights to off, maybe not necessary later? ////
+     
+      color white = #ffffff;
+      int stripLength = strip.getLength();
+      
+      //// Reset all lights to off & establish brightness ////
       DeviceRegistry.setOverallBrightnessScale(1);
-      for (int i=0; i < strip.getLength(); i++) {
+      for (int i=0; i < stripLength; i++) {
         strip.setPixel(#000000, i);
       }
 
       switch(incomingVal) {
-      case 1:  // println(" //////~~~~~~///////    Fourth Floor      //////~~~~~~///////"); 
-        for (int i=0; i < strip.getLength(); i++) {
+      case 1:  // (" //////~~~~~~///////    Fourth Floor      //////~~~~~~///////"); 
+        for (int i=0; i < stripLength; i++) {
           strip.setPixel(#000000, incomingVal);
-          strip.setPixel(c1, theOscMessage.get(i).intValue());
+          strip.setPixel(white, theOscMessage.get(i).intValue());
           println("OSC MESSAGE :: " + theOscMessage.get(i).intValue());
         }
         break;
+
       case 2:  // (" //////~~~~~~///////    Third Floor      //////~~~~~~///////");
-        for (int i=0; i < strip.getLength(); i++) {
+        for (int i=0; i < stripLength; i++) {
           strip.setPixel(#000000, incomingVal);
-          strip.setPixel(c1, theOscMessage.get(i).intValue()); 
+          strip.setPixel(white, theOscMessage.get(i).intValue()); 
           println("OSC MESSAGE :: " + theOscMessage.get(i).intValue());
         }
         break;
+
       case 3:  // (" //////~~~~~~///////    ALL ON      //////~~~~~~///////");
-        for (int i=0; i < strip.getLength(); i++) {
-          strip.setPixel(c1, i);
+        for (int i=0; i < stripLength; i++) {
+          strip.setPixel(white, i);
           delay(5);
         }
         break;
+
       case 4:  // (" //////~~~~~~///////    ALL OFF      //////~~~~~~///////");
-        for (int i=0; i < strip.getLength(); i++) {
+        for (int i=0; i < stripLength; i++) {
           strip.setPixel(#000000, i);
         }
         break;
+
       case 5:  // (" //////~~~~~~///////    Second Floor      //////~~~~~~///////");
-        for (int i=0; i < strip.getLength(); i++) {
+        for (int i=0; i < stripLength; i++) {
           strip.setPixel(#000000, incomingVal);
-          strip.setPixel(c1, theOscMessage.get(i).intValue());
+          strip.setPixel(white, theOscMessage.get(i).intValue());
           println("OSC MESSAGE :: " + theOscMessage.get(i).intValue());
         }
         break;
+
       case 6:  // (" //////~~~~~~///////    First Floor      //////~~~~~~///////");
-        for (int i=0; i < strip.getLength(); i++) {
+        for (int i=0; i < stripLength; i++) {
           strip.setPixel(#000000, incomingVal);
-          strip.setPixel(c1, theOscMessage.get(i).intValue());
+          strip.setPixel(white, theOscMessage.get(i).intValue());
           println("OSC MESSAGE :: " + theOscMessage.get(i).intValue());
         }
         break;
+
       case 7:  // (" //////~~~~~~///////    Fifth Floor      //////~~~~~~///////");
-        for (int i=0; i < strip.getLength(); i++) {
+        for (int i=0; i < stripLength; i++) {
           strip.setPixel(#000000, incomingVal);
-          strip.setPixel(c1, theOscMessage.get(i).intValue());
+          strip.setPixel(white, theOscMessage.get(i).intValue());
           println("OSC MESSAGE :: " + theOscMessage.get(i).intValue());
         }
         break;
+
       case 8:  // (" //////~~~~~~///////    North Wing      //////~~~~~~///////");
-        for (int i=0; i < strip.getLength(); i++) {
+        for (int i=0; i < stripLength; i++) {
           strip.setPixel(#000000, incomingVal);
-          strip.setPixel(c1, theOscMessage.get(i).intValue());
+          strip.setPixel(white, theOscMessage.get(i).intValue());
           println("OSC MESSAGE :: " + theOscMessage.get(i).intValue());
         }
         break;
-      case 9: 
-        //(" //////~~~~~~///////    Half Intense      //////~~~~~~///////");
-        for (int i=0; i < strip.getLength(); i++) {
-          DeviceRegistry.setOverallBrightnessScale(0.5);
-          strip.setPixel(c1, i);
-          delay(5);
+
+      case 9:  // (" //////~~~~~~///////    Half Intense      //////~~~~~~///////");
+        for (int i=0; i < stripLength; i++) {
+          DeviceRegistry.setOverallBrightnessScale(0.4);
+          strip.setPixel(white, i);
+          // delay(5);  // delay makes cascade between pixels
         }
         break;
-      case 10: 
-        // (" //////~~~~~~///////    Dim Intense      //////~~~~~~///////");
-        for (int i=0; i < strip.getLength(); i++) {
+
+      case 10:  // (" //////~~~~~~///////    Dim Intense      //////~~~~~~///////");
+        for (int i=0; i < stripLength; i++) {
           DeviceRegistry.setOverallBrightnessScale(0.09);
-          strip.setPixel(c1, i);
+          strip.setPixel(white, i);
           delay(5);
         }
         break;
@@ -136,6 +144,8 @@ void oscEvent(OscMessage theOscMessage) {
     }
   }
 }
+
+
 
 private void prepareExitHandler () {
   Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
