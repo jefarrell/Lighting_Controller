@@ -1,0 +1,22 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'lights/style.css' %}" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.js"></script>
+<script src="{% static 'lights/script.js' %}"></script>
+
+
+<div id="container">
+	<ul id="buttonList"> 
+		{% for question in question_list %}
+			<li>
+				<input type="button" id="{{question.id}}" class="rooms" value= "{{question.question_text }}" />
+			</li>
+		{% endfor %}
+	</ul>
+</div>
+
+
+
+
+
+
+

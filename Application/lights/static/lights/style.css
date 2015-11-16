@@ -1,0 +1,43 @@
+li {
+	padding-top:10px;
+}
+
+#buttonList {
+	list-style:none;
+	padding-top: 10px;
+}
+
+body {
+	background-color: #BFBFBF;
+}
+	
+.rooms, .intensity {
+	border: 3px solid #FFFFFF;
+	border-radius:1px;
+	background-color:#BFBFBF;
+	color:#FFFFFF;
+	font-size:25px;
+	padding:10px;
+	text-decoration: none;
+	cursor:pointer;
+}
+
+.intensity {
+	background-color: #F7E259;
+	border: 3px solid #F7E259 ;
+	color:#BFBFBF;
+}
+
+input[type="button"]:hover {
+	background-color:#FFFFFF;
+	color:#BFBFBF;
+}
+
+input[type="button"]:active {
+	background-color:#BFBFBF;
+	color:#F7E259;
+}
+
+input:focus {
+	outline:0;
+}
